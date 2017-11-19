@@ -46,8 +46,11 @@ bws.on('ticker', (pair, ticker) => {
     if (shouldBuy(lastPrice)) {
         buy();
     }
-    if (shouldSell(lastPrice)) {
-        sell();
+    if (shouldTakeProfit(lastPrice)) {
+        takeProfit();
+    }
+    if (shouldStopLoss(lastPrice)) {
+        stopLoss();
     }
 })
 
@@ -63,14 +66,24 @@ const shouldBuy = (price) => {
     return price >= Constants.pricePairs[buyNumber].buyStopPrice;
 }
 
-const shouldSell = (price) => {
+const shouldTakeProfit = (price) => {
     if (hasError) {
         return false;
     }
-    if (sellNumber >= Constants.pricePairs.length) {
+    if (buyNumber == sellNumber) {
         return false;
     }
     return price >= Constants.pricePairs[sellNumber].sellStopPrice;
+}
+
+const shouldStopLoss = (price) => {
+    if (hasError) {
+        return false;
+    }
+    if (buyNumber == sellNumber) {
+        return false;
+    }
+    return price <= Constants.pricePairs[sellNumber].stopLoss;
 }
 
 const buy = () => {
@@ -97,4 +110,12 @@ const sell = () => {
         sellNumber += 1;
         console.log(res);
     })
+}
+
+const takeProfit = () => {
+    sell();
+}
+
+const stopLoss = () => {
+    sell();
 }
