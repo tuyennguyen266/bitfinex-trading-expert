@@ -21,7 +21,8 @@ const Type = {
 const pricePairs = [
     {
         buyStopPrice: 7991,
-        sellStopPrice: 8150
+        sellStopPrice: 8150,
+        stopLoss: 7970
     }
 
 ];
