@@ -21,25 +21,9 @@ const Type = {
 const pricePairs = [
     {
         buyStopPrice: 1226.5,
-        sellStopPrice: 1244,
+        sellStopPrice: 1262,
         stopLoss: 0
-    },
-    {
-        buyStopPrice: 1264,
-        sellStopPrice: 1280,
-        stopLoss: 0
-    },
-    {
-        buyStopPrice: 1348.1,
-        sellStopPrice: 1368,
-        stopLoss: 0
-    },
-    {
-        buyStopPrice: 1379.9,
-        sellStopPrice: 1420,
-        stopLoss: 0
-    },
-
+    }
 ];
 
 module.exports = {
