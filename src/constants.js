@@ -18,13 +18,32 @@ const Type = {
     ExchangeFillOrKill: 'exchange fill-or-kill'
 }
 
+const pricePairs = [
+    {
+        buyStopPrice: 1226.5,
+        sellStopPrice: 1244
+    },
+    {
+        buyStopPrice: 1264,
+        sellStopPrice: 1280
+    },
+    {
+        buyStopPrice: 1348.1,
+        sellStopPrice: 1368
+    },
+    {
+        buyStopPrice: 1379.9,
+        sellStopPrice: 1420
+    },
+
+];
+
 module.exports = {
     tradingPair: TradingPairsUSD.BCH,
-    buyStopPrice: 1188,
-    buyLimitPrice: '1189',
-    amount: '0.02',
-    sellStopPrice: 1189,
-    sellLimitPrice: '1188',
+    buyLimitPrice: '1263',
+    sellLimitPrice: '1180',
+    pricePairs: pricePairs,
+    amount: '0.1',
     side: Side,
     type: Type.ExchangeMarket
 }
