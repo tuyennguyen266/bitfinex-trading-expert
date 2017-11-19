@@ -20,11 +20,11 @@ const Type = {
 
 module.exports = {
     tradingPair: TradingPairsUSD.BCH,
-    buyStopPrice: 1188,
-    buyLimitPrice: '1189',
-    amount: '0.02',
-    sellStopPrice: 1189,
-    sellLimitPrice: '1188',
+    buyStopPrice: 1263,
+    buyLimitPrice: '1263',
+    amount: '',
+    sellStopPrice: 1280,
+    sellLimitPrice: '1180',
     side: Side,
     type: Type.ExchangeMarket
 }
