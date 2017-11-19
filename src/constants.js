@@ -20,18 +20,26 @@ const Type = {
 
 const pricePairs = [
     {
-        buyStopPrice: 7991,
-        sellStopPrice: 8150
+        buyStopPrice: 42.856,
+        sellStopPrice: 44.141
+    },
+    {
+        buyStopPrice: 45.686,
+        sellStopPrice: 46.233
+    },
+    {
+        buyStopPrice: 48.451,
+        sellStopPrice: 50.873
     }
 
 ];
 
 module.exports = {
-    tradingPair: TradingPairsUSD.BTC,
-    buyLimitPrice: '7991',
-    sellLimitPrice: '8150',
+    tradingPair: TradingPairsUSD.NEO,
+    buyLimitPrice: '42.856',
+    sellLimitPrice: '44.141',
     pricePairs: pricePairs,
-    amount: '0.014',
+    amount: '3',
     side: Side,
     type: Type.ExchangeMarket
 }
