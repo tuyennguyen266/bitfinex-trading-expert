@@ -12,8 +12,8 @@ const opts = {
 
 const bws = new BFX(API_KEY, API_SECRET, opts).ws
 
-var isBought = false;
-var isSold = false;
+var buyNumber = 0;
+var sellNumber = 0;
 
 bws.on('auth', () => {
     // emitted after .auth()
@@ -53,11 +53,17 @@ bws.on('ticker', (pair, ticker) => {
 bws.on('error', console.error)
 
 const shouldBuy = (price) => {
-    return price >= Constants.buyStopPrice && !isBought;
+    if (buyNumber >= Constants.pricePairs.length) {
+        return false;
+    }
+    return price >= Constants.pricePairs[buyNumber].buyStopPrice;
 }
 
 const shouldSell = (price) => {
-    return price >= Constants.sellStopPrice && isBought && !isSold;
+    if (sellNumber >= Constants.pricePairs.length) {
+        return false;
+    }
+    return price >= Constants.pricePairs[sellNumber].sellStopPrice;
 }
 
 const buy = () => {
@@ -67,7 +73,7 @@ const buy = () => {
             console.log(err);
             return;
         }
-        isBought = true;
+        buyNumber += 1;
         console.log(res);
     })
 };
@@ -79,7 +85,7 @@ const sell = () => {
             console.log(err);
             return;
         }
-        isSold = true;
+        sellNumber += 1;
         console.log(res);
     })
 }
