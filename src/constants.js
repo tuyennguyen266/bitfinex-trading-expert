@@ -23,18 +23,7 @@ const pricePairs = [
         buyStopPrice: 42.856,
         sellStopPrice: 44.141,
         stopLoss: 0
-    },
-    {
-        buyStopPrice: 45.686,
-        sellStopPrice: 46.233,
-        stopLoss: 0
-    },
-    {
-        buyStopPrice: 48.451,
-        sellStopPrice: 50.873,
-        stopLoss: 0
     }
-
 ];
 
 module.exports = {
