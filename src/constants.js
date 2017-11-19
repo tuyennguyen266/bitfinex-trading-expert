@@ -21,23 +21,28 @@ const Type = {
 
 const pricePairs = [
     {
-        buyStopPrice: 0.24790,
-        sellStopPrice: 0.25533,
+        buyStopPrice: 371.01,
+        sellStopPrice: 382,
         stopLoss: 0
     },
     {
-        buyStopPrice: 0.28151,
-        sellStopPrice: 0.29558,
+        buyStopPrice: 395.04,
+        sellStopPrice: 399.9,
+        stopLoss: 0
+    },
+    {
+        buyStopPrice: 412.3,
+        sellStopPrice: 428,
         stopLoss: 0
     }
 ];
 
 module.exports = {
-    tradingPair: TradingPairsUSD.XRP,
-    buyLimitPrice: '0.24790',
-    sellLimitPrice: '0.25533',
+    tradingPair: TradingPairsUSD.ETH,
+    buyLimitPrice: '371.01',
+    sellLimitPrice: '382',
     pricePairs: pricePairs,
-    amount: '400',
+    amount: '1',
     side: Side,
     type: Type.ExchangeMarket
 }
