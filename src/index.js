@@ -53,7 +53,7 @@ bws.on('ticker', (pair, ticker) => {
 bws.on('error', console.error)
 
 const shouldBuy = (price) => {
-    return price > Constants.buyStopPrice && !isBought;
+    return price >= Constants.buyStopPrice && !isBought;
 }
 
 const shouldSell = (price) => {
@@ -61,8 +61,6 @@ const shouldSell = (price) => {
 }
 
 const buy = () => {
-    console.log('API_KEY:', API_KEY);
-    console.log('API_SECRET:', API_SECRET);
     const bfxRest = new BFX(API_KEY, API_SECRET, {version: 1}).rest;
     bfxRest.new_order(Constants.tradingPair, Constants.amount, Constants.buyLimitPrice, 'bitfinex', Constants.side.BUY, Constants.type, (err, res) => {
         if (err) {
