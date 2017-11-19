@@ -12,6 +12,7 @@ const opts = {
 
 const bws = new BFX(API_KEY, API_SECRET, opts).ws
 
+var hasError = false;
 var buyNumber = 0;
 var sellNumber = 0;
 
@@ -45,25 +46,44 @@ bws.on('ticker', (pair, ticker) => {
     if (shouldBuy(lastPrice)) {
         buy();
     }
-    if (shouldSell(lastPrice)) {
-        sell();
+    if (shouldTakeProfit(lastPrice)) {
+        takeProfit();
+    }
+    if (shouldStopLoss(lastPrice)) {
+        stopLoss();
     }
 })
 
 bws.on('error', console.error)
 
 const shouldBuy = (price) => {
+    if (hasError) {
+        return false;
+    }
     if (buyNumber >= Constants.pricePairs.length) {
         return false;
     }
     return price >= Constants.pricePairs[buyNumber].buyStopPrice;
 }
 
-const shouldSell = (price) => {
-    if (sellNumber >= Constants.pricePairs.length) {
+const shouldTakeProfit = (price) => {
+    if (hasError) {
+        return false;
+    }
+    if (buyNumber == sellNumber) {
         return false;
     }
     return price >= Constants.pricePairs[sellNumber].sellStopPrice;
+}
+
+const shouldStopLoss = (price) => {
+    if (hasError) {
+        return false;
+    }
+    if (buyNumber == sellNumber) {
+        return false;
+    }
+    return price <= Constants.pricePairs[sellNumber].stopLoss;
 }
 
 const buy = () => {
@@ -71,6 +91,7 @@ const buy = () => {
     bfxRest.new_order(Constants.tradingPair, Constants.amount, Constants.buyLimitPrice, 'bitfinex', Constants.side.BUY, Constants.type, (err, res) => {
         if (err) {
             console.log(err);
+            hasError = true;
             return;
         }
         buyNumber += 1;
@@ -83,9 +104,18 @@ const sell = () => {
     bfxRest.new_order(Constants.tradingPair, Constants.amount, Constants.sellLimitPrice, 'bitfinex', Constants.side.SELL, Constants.type, (err, res) => {
         if (err) {
             console.log(err);
+            hasError = true;
             return;
         }
         sellNumber += 1;
         console.log(res);
     })
+}
+
+const takeProfit = () => {
+    sell();
+}
+
+const stopLoss = () => {
+    sell();
 }
