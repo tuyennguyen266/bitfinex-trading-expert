@@ -22,22 +22,22 @@ const pricePairs = [
     {
         buyStopPrice: 1226.5,
         sellStopPrice: 1244,
-        stopLoss: 1224
+        stopLoss: 0
     },
     {
         buyStopPrice: 1264,
         sellStopPrice: 1280,
-        stopLoss: 1262
+        stopLoss: 0
     },
     {
         buyStopPrice: 1348.1,
         sellStopPrice: 1368,
-        stopLoss: 1345
+        stopLoss: 0
     },
     {
         buyStopPrice: 1379.9,
         sellStopPrice: 1420,
-        stopLoss: 1375
+        stopLoss: 0
     },
 
 ];
