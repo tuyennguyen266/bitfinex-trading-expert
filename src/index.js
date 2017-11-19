@@ -12,6 +12,7 @@ const opts = {
 
 const bws = new BFX(API_KEY, API_SECRET, opts).ws
 
+var hasError = false;
 var buyNumber = 0;
 var sellNumber = 0;
 
@@ -53,6 +54,9 @@ bws.on('ticker', (pair, ticker) => {
 bws.on('error', console.error)
 
 const shouldBuy = (price) => {
+    if (hasError) {
+        return false;
+    }
     if (buyNumber >= Constants.pricePairs.length) {
         return false;
     }
@@ -60,6 +64,9 @@ const shouldBuy = (price) => {
 }
 
 const shouldSell = (price) => {
+    if (hasError) {
+        return false;
+    }
     if (sellNumber >= Constants.pricePairs.length) {
         return false;
     }
@@ -71,6 +78,7 @@ const buy = () => {
     bfxRest.new_order(Constants.tradingPair, Constants.amount, Constants.buyLimitPrice, 'bitfinex', Constants.side.BUY, Constants.type, (err, res) => {
         if (err) {
             console.log(err);
+            hasError = true;
             return;
         }
         buyNumber += 1;
@@ -83,6 +91,7 @@ const sell = () => {
     bfxRest.new_order(Constants.tradingPair, Constants.amount, Constants.sellLimitPrice, 'bitfinex', Constants.side.SELL, Constants.type, (err, res) => {
         if (err) {
             console.log(err);
+            hasError = true;
             return;
         }
         sellNumber += 1;
