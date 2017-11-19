@@ -2,7 +2,8 @@ const TradingPairsUSD = {
     BTC: 'BTCUSD',
     BCH: 'BCHUSD',
     NEO: 'NEOUSD',
-    ETH: 'ETHUSD'
+    ETH: 'ETHUSD',
+    XRP: 'XRPUSD'
 }
 
 const Side = {
@@ -20,29 +21,23 @@ const Type = {
 
 const pricePairs = [
     {
-        buyStopPrice: 42.856,
-        sellStopPrice: 44.141,
-        stopLoss: 42.850
+        buyStopPrice: 0.24790,
+        sellStopPrice: 0.25533,
+        stopLoss: 0
     },
     {
-        buyStopPrice: 45.686,
-        sellStopPrice: 46.233,
-        stopLoss: 45.680
-    },
-    {
-        buyStopPrice: 48.451,
-        sellStopPrice: 50.873,
-        stopLoss: 48.445
+        buyStopPrice: 0.28151,
+        sellStopPrice: 0.29558,
+        stopLoss: 0
     }
-
 ];
 
 module.exports = {
-    tradingPair: TradingPairsUSD.NEO,
-    buyLimitPrice: '42.856',
-    sellLimitPrice: '44.141',
+    tradingPair: TradingPairsUSD.XRP,
+    buyLimitPrice: '0.24790',
+    sellLimitPrice: '0.25533',
     pricePairs: pricePairs,
-    amount: '3',
+    amount: '400',
     side: Side,
     type: Type.ExchangeMarket
 }
