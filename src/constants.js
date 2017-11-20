@@ -21,18 +21,17 @@ const Type = {
 
 const pricePairs = [
     {
-        buyStopPrice: 371.01,
-        sellStopPrice: 382,
-        stopLoss: 0
+        buyStopPrice: 363.1,
+        buyLimitPrice: 364,
+        sellLimitPrice: 367.5,
+        stopLossPrice: 361
     }
 ];
 
 module.exports = {
     tradingPair: TradingPairsUSD.ETH,
-    buyLimitPrice: '371.01',
-    sellLimitPrice: '382',
     pricePairs: pricePairs,
     amount: '1',
     side: Side,
-    type: Type.ExchangeMarket
+    types: Type
 }
