@@ -13,8 +13,8 @@ const opts = {
 const bws = new BFX(API_KEY, API_SECRET, opts).ws
 
 var hasError = false;
-var buyNumber = 0;
-var sellNumber = 0;
+var orderNumber = 0;
+var currentSellOrder = null;
 
 bws.on('auth', () => {
     // emitted after .auth()
@@ -43,14 +43,15 @@ bws.on('trade', (pair, trade) => {
 bws.on('ticker', (pair, ticker) => {
     console.log('Ticker:', ticker)
     const lastPrice = ticker.LAST_PRICE;
+    console.log('PRICE:', Constants.pricePairs[orderNumber].buyLimitPrice);
     if (shouldBuy(lastPrice)) {
         buy();
     }
-    if (shouldTakeProfit(lastPrice)) {
-        takeProfit();
-    }
     if (shouldStopLoss(lastPrice)) {
         stopLoss();
+    }
+    if (shouldClearCurrentSell(lastPrice)) {
+        clearCurrentSell();
     }
 })
 
@@ -60,62 +61,81 @@ const shouldBuy = (price) => {
     if (hasError) {
         return false;
     }
-    if (buyNumber >= Constants.pricePairs.length) {
+    if (orderNumber >= Constants.pricePairs.length) {
         return false;
     }
-    return price >= Constants.pricePairs[buyNumber].buyStopPrice;
-}
-
-const shouldTakeProfit = (price) => {
-    if (hasError) {
-        return false;
-    }
-    if (buyNumber == sellNumber) {
-        return false;
-    }
-    return price >= Constants.pricePairs[sellNumber].sellStopPrice;
+    return price >= Constants.pricePairs[orderNumber].buyStopPrice;
 }
 
 const shouldStopLoss = (price) => {
     if (hasError) {
         return false;
     }
-    if (buyNumber == sellNumber) {
+    if (!currentSellOrder) {
         return false;
     }
-    return price <= Constants.pricePairs[sellNumber].stopLoss;
+    return price <= Constants.pricePairs[orderNumber-1].stopLossPrice;
 }
+
+const shouldClearCurrentSell = (price) => {
+    if (hasError) {
+        return false;
+    }
+    if (!currentSellOrder) {
+        return false;
+    }
+    return price > Constants.pricePairs[orderNumber-1].sellLimitPrice;
+}
+
 
 const buy = () => {
     const bfxRest = new BFX(API_KEY, API_SECRET, {version: 1}).rest;
-    bfxRest.new_order(Constants.tradingPair, Constants.amount, Constants.buyLimitPrice, 'bitfinex', Constants.side.BUY, Constants.type, (err, res) => {
+    bfxRest.new_order(Constants.tradingPair, Constants.amount, `\(Constants.pricePairs[orderNumber].buyLimitPrice)`, 'bitfinex', Constants.side.BUY, Constants.types.ExchangeLimit, (err, res) => {
         if (err) {
             console.log(err);
             hasError = true;
             return;
         }
-        buyNumber += 1;
+        bookSellOrder();
+        orderNumber += 1;
         console.log(res);
     })
 };
 
-const sell = () => {
+const bookSellOrder = () => {
     const bfxRest = new BFX(API_KEY, API_SECRET, {version: 1}).rest;
-    bfxRest.new_order(Constants.tradingPair, Constants.amount, Constants.sellLimitPrice, 'bitfinex', Constants.side.SELL, Constants.type, (err, res) => {
+    bfxRest.new_order(Constants.tradingPair, Constants.amount, `\(Constants.pricePairs[orderNumber].sellLimitPrice)`, 'bitfinex', Constants.side.SELL, Constants.types.ExchangeLimit, (err, res) => {
         if (err) {
             console.log(err);
             hasError = true;
             return;
         }
-        sellNumber += 1;
+        currentSellOrder = res.order_id;
         console.log(res);
     })
 }
 
-const takeProfit = () => {
-    sell();
+const stopLoss = () => {
+    const bfxRest = new BFX(API_KEY, API_SECRET, {version: 1}).rest;
+    bfxRest.cancel_order(currentSellOrder, (err, res) => {
+        if (err) {
+            console.log(err);
+            hasError = true;
+            return;
+        }
+        console.log(res);
+        clearCurrentSell();
+        bfxRest.new_order(Constants.tradingPair, Constants.amount, `\(Constants.pricePairs[orderNumber].stopLossPrice)`, 'bitfinex', Constants.side.SELL, Constants.types.ExchangeMarket, (err, res) => {
+            if (err) {
+                console.log(err);
+                hasError = true;
+                return;
+            }
+            console.log(res);
+        })
+    })
 }
 
-const stopLoss = () => {
-    sell();
+const clearCurrentSell = () => {
+    currentSellOrder = null;
 }
