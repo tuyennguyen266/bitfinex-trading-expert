@@ -3,7 +3,7 @@ const TradingPairsUSD = {
     BCH: 'BCHUSD',
     NEO: 'NEOUSD',
     ETH: 'ETHUSD',
-    DASH: 'DASHUSD'
+    DASH: 'DSHUSD'
 }
 
 const Side = {
