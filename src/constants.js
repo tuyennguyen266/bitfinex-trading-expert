@@ -2,7 +2,8 @@ const TradingPairsUSD = {
     BTC: 'BTCUSD',
     BCH: 'BCHUSD',
     NEO: 'NEOUSD',
-    ETH: 'ETHUSD'
+    ETH: 'ETHUSD',
+    DASH: 'DASHUSD'
 }
 
 const Side = {
@@ -20,17 +21,17 @@ const Type = {
 
 const pricePairs = [
     {
-        buyStopPrice: 1226.5,
-        buyLimitPrice: 1227,
-        sellLimitPrice: 1244,
-        stopLossPrice: 1220
+        buyStopPrice: 453.6,
+        buyLimitPrice: 454,
+        sellLimitPrice: 459,
+        stopLossPrice: 451.5
     }
 ];
 
 module.exports = {
-    tradingPair: TradingPairsUSD.BCH,
+    tradingPair: TradingPairsUSD.DASH,
     pricePairs: pricePairs,
-    amount: '0.1',
+    amount: '0.3',
     side: Side,
     types: Type
 }
