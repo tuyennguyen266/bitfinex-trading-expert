@@ -42,17 +42,17 @@ bws.on('trade', (pair, trade) => {
 
 bws.on('ticker', (pair, ticker) => {
     console.log('Ticker:', ticker)
-    const lastPrice = ticker.LAST_PRICE;
-    console.log('PRICE:', Constants.pricePairs[orderNumber].buyLimitPrice);
-    if (shouldBuy(lastPrice)) {
-        buy();
-    }
-    if (shouldStopLoss(lastPrice)) {
-        stopLoss();
-    }
-    if (shouldClearCurrentSell(lastPrice)) {
-        clearCurrentSell();
-    }
+    // const lastPrice = ticker.LAST_PRICE;
+    // console.log('PRICE:', Constants.pricePairs[orderNumber].buyLimitPrice);
+    // if (shouldBuy(lastPrice)) {
+    //     buy();
+    // }
+    // if (shouldStopLoss(lastPrice)) {
+    //     stopLoss();
+    // }
+    // if (shouldClearCurrentSell(lastPrice)) {
+    //     clearCurrentSell();
+    // }
 })
 
 bws.on('error', console.error)
